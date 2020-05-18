@@ -9,6 +9,7 @@ class Info(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.icon = '<:info:712000699600339015>'
 
     @commands.command(description="Displays the average webstock latency.")
     async def testerthing(self, ctx):

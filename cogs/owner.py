@@ -9,6 +9,7 @@ class OwnerOnly(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.icon = '<:owner:712000766826774568>'
 
     @commands.command(description="Owner only.")
     @commands.is_owner()
