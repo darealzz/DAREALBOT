@@ -4,6 +4,7 @@ import time
 import sys
 import os
 import datetime
+from classes.helping import Helping
 
 class EmbedHelpCommand(commands.HelpCommand):
 
@@ -92,7 +93,7 @@ class EmbedHelpCommand(commands.HelpCommand):
         if isinstance(group, commands.Group):
             filtered = await self.filter_commands(group.commands, sort=True)
             for command in filtered:
-                embed.add_field(name='self.get_command_signature(command)', value=command.short_doc, inline=False)
+                embed.add_field(name=self.get_command_signature(command), value=command.short_doc, inline=False)
 
         embed.set_thumbnail(url=group.cog.thumbnail)
         embed.set_footer(text=self.get_ending_note())
@@ -112,21 +113,21 @@ class Info(commands.Cog):
         self.bot = bot
         self.icon = "<:info:712343961796083733>"
         self.thumbnail = 'https://cdn.discordapp.com/attachments/711529920349732909/712341250409365544/feelings.png'
+        self.helping = Helping()
 
     @commands.command(description="Displays the average webstock latency.")
     async def ping(self, ctx):
         """
-        test
+        Displays the average webstock latency.
         """
         lst=[]
         for i in range(3):
             lst.append(round(self.bot.latency*1000))
 
 
-        embed=discord.Embed(title="PONG", color=0x14cfa0)
-        embed.set_author(name=ctx.author, icon_url=ctx.author.avatar_url_as(format="png"))
+        embed=discord.Embed(title="PONG", color=0x36393E)
         embed.add_field(name=f"Average websocket latency", value=f":ping_pong: | `{lst[0]}ms`", inline=False)
-        embed.set_footer()
+        embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=self.helping.get_footer(ctx))
         await ctx.send(embed=embed)
 
     # def cog_unload(self):

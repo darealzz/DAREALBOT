@@ -18,7 +18,7 @@ class OwnerOnly(commands.Cog):
     @commands.is_owner()
     async def load(self, ctx, extension):
         """
-        Loads cogs.
+        Loads specified cog.
         """
         try:
             self.bot.load_extension(f"cogs.{extension}")
@@ -31,7 +31,7 @@ class OwnerOnly(commands.Cog):
     @commands.is_owner()
     async def reload(self, ctx, extension):
         """
-        Reloads specific cog.
+        Reloads specified cog.
         """
         try:
             self.bot.unload_extension(f"cogs.{filename[:-3]}")
@@ -45,7 +45,7 @@ class OwnerOnly(commands.Cog):
     @commands.is_owner()
     async def unload(self, ctx, extension):
         """
-        Unloads specific cog.
+        Unloads specified cog.
         """
         try:
             self.bot.unload_extension(f"cogs.{extension}")
@@ -85,10 +85,35 @@ class OwnerOnly(commands.Cog):
     @commands.group()
     @commands.is_owner()
     async def debugmode(self, ctx):
+        """
+        Bots mode respective to the subcommand.
+        """
+        pass
+        # self.bot.unload_extension(f"events.errors")
+        #
+        # await ctx.send(f"<:check:711530148196909126> | **Bot has been changed to debuging mode.**")
 
-        self.bot.unload_extension(f"events.errors")
+    @debugmode.command(name='-on')
+    async def _on(self, ctx):
+        """
+        Changes bot to debug mode.
+        """
+        try:
+            self.bot.unload_extension(f"events.errors")
+            await ctx.send(f"<:check:711530148196909126> | **Bot has been changed to debuging mode.**")
+        except:
+            await ctx.send(f"<:rcross:711530086251364373> | **The bot is already in debug mode.**")
 
-        await ctx.send(f"<:check:711530148196909126> | **Bot has been changed to debuging mode.**")
+    @debugmode.command(name='-off')
+    async def _off(self, ctx):
+        """
+        Turns debug mode off.
+        """
+        try:
+            self.bot.load_extension(f"events.errors")
+            await ctx.send(f"<:check:711530148196909126> | **Debuging mode has been turned off.**")
+        except:
+            await ctx.send(f"<:rcross:711530086251364373> | **Debug mode is already off.**")
 
 def setup(bot):
     bot.add_cog(OwnerOnly(bot))

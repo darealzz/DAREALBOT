@@ -3,6 +3,7 @@ from discord.ext import commands
 import time
 import sys
 import os
+from cogs.info import EmbedHelpCommand
 
 
 class Errors(commands.Cog):
@@ -17,9 +18,6 @@ class Errors(commands.Cog):
             return
         if isinstance(error, commands.CommandNotFound):
             return
-        if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("<:rcross:711530086251364373> **You did not give all peramiters for that command!.**")
-            return
         if isinstance(error, commands.BadArgument):
             await ctx.send("<:rcross:711530086251364373> **You did not give valid peramiters for that command!.**")
             return
@@ -27,8 +25,8 @@ class Errors(commands.Cog):
             await ctx.send("<:rcross:711530086251364373> **You must own this bot to use that command!.**")
             return
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("<:rcross:711530086251364373> **Please provide all aurguments!.**")
-            return
+            await ctx.send("<:rcross:711530086251364373> **You are missing required aurguments.**")
+
 
 
 
