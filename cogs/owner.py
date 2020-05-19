@@ -6,10 +6,13 @@ import os
 
 
 class OwnerOnly(commands.Cog):
-
+    """
+    These commands has been reserved for the ownership team to streamline development.
+    """
     def __init__(self, bot):
         self.bot = bot
         self.icon = '<:owner:712000766826774568>'
+        self.thumbnail = 'https://cdn.discordapp.com/attachments/711529920349732909/712343777590902875/feelings_1.png'
 
     @commands.command(description="Owner only.")
     @commands.is_owner()
