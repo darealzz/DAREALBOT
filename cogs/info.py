@@ -114,6 +114,7 @@ class Info(commands.Cog):
         self.icon = "<:info:712343961796083733>"
         self.thumbnail = 'https://cdn.discordapp.com/attachments/711529920349732909/712341250409365544/feelings.png'
         self.helping = Helping()
+        self.global_check = False
 
     @commands.command(description="Displays the average webstock latency.")
     async def ping(self, ctx):

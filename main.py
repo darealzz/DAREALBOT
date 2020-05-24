@@ -29,4 +29,4 @@ bot.load_extension('jishaku')
 
 
 
-bot.run('no')
+bot.run('NTg5MDc1MjE4NjA2MTk0Njk5.XslBpg.3kv-hEVyHvMwh2S9hlXgGWSB2Nk')

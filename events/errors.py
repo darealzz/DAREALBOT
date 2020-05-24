@@ -4,6 +4,7 @@ import time
 import sys
 import os
 from cogs.info import EmbedHelpCommand
+from classes.helping import Helping
 
 
 class Errors(commands.Cog):
@@ -11,22 +12,32 @@ class Errors(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+
+
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
-        if isinstance(error, commands.CheckFailure):
-            await ctx.send("<:rcross:711530086251364373> **You don't have permissions to run this command!.**")
-            return
         if isinstance(error, commands.CommandNotFound):
             return
         if isinstance(error, commands.BadArgument):
-            await ctx.send("<:rcross:711530086251364373> **You did not give valid peramiters for that command!.**")
+            embed=discord.Embed(title="You did not give valid permiters for that command.", description=f'<:warningerrors:713782413381075536> Use `{ctx.prefix}help {ctx.command}` for help.', color=0x36393E)
+            embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=Helping().get_footer(ctx))
+            await ctx.send(embed=embed)
             return
         if isinstance(error, commands.NotOwner):
-            await ctx.send("<:rcross:711530086251364373> **You must own this bot to use that command!.**")
+            embed=discord.Embed(title="You don't have permissions to run this command.", description=f'<:warningerrors:713782413381075536> `{ctx.prefix}{ctx.command}` has been restricted to owner usage only.', color=0x36393E)
+            embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=Helping().get_footer(ctx))
+            await ctx.send(embed=embed)
             return
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("<:rcross:711530086251364373> **You are missing required aurguments.**")
-
+            embed=discord.Embed(title="You are missing required arguments for that command.", description=f'<:warningerrors:713782413381075536> Use `{ctx.prefix}help {ctx.command}` for help.', color=0x36393E)
+            embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=Helping().get_footer(ctx))
+            await ctx.send(embed=embed)
+            return
+        if isinstance(error, commands.CheckFailure):
+            embed=discord.Embed(title="You don't have permissions to run this command.", description=f'<:warningerrors:713782413381075536> `{ctx.prefix}{ctx.command}` has been restricted to owner usage only.', color=0x36393E)
+            embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=Helping().get_footer(ctx))
+            await ctx.send(embed=embed)
+            return
 
 
 

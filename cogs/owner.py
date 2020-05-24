@@ -3,6 +3,7 @@ from discord.ext import commands
 import time
 import sys
 import os
+from classes.helping import Helping
 
 
 class OwnerOnly(commands.Cog):
@@ -60,16 +61,32 @@ class OwnerOnly(commands.Cog):
         """
         Reloads all cogs.
         """
+
+        embed=discord.Embed(title="a", color=0x36393E)
+        # embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=Helping().get_footer(ctx))
+        # await ctx.send(embed=embed)
+        # return
+        description=""
+        loaded=0
+        not_loaded=0
         for filename in os.listdir('./cogs'):
             if filename.endswith('.py'):
                 try:
                     self.bot.unload_extension(f"cogs.{filename[:-3]}")
                 except commands.errors.ExtensionNotLoaded:
-                    await ctx.send(f"<:rcross:711530086251364373> | **Cog not loaded: `{filename[:-3]}`**")
+                    description += f"<:warningerrors:713782413381075536> | **Cog not loaded: `{filename[:-3]}`**\n"
+                    not_loaded+=1
                 else:
                     self.bot.load_extension(f"cogs.{filename[:-3]}")
-                    await ctx.send(f"<:check:711530148196909126> | **Realoded Cog: `{filename[:-3]}`**")
+                    description += f"<:check:711530148196909126> | **Realoded Cog: `{filename[:-3]}`**\n"
+                    loaded+=1
+
+                    # await ctx.send(f"<:check:711530148196909126> | **Realoded Cog: `{filename[:-3]}`**")
         #await ctx.send(f"<:check:711530148196909126> | `Reloaded the cogs`")
+        embed.title=f'{loaded} modules where loaded & {not_loaded} modules where not loaded.'
+        embed.description=description
+        embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=Helping().get_footer(ctx))
+        await ctx.send(embed=embed)
 
     @commands.command(description="Owner only.")
     @commands.is_owner()

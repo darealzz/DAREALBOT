@@ -3,7 +3,7 @@ from discord.ext import commands, tasks
 import time
 import sys
 import os
-
+import json
 
 class Events(commands.Cog):
 
@@ -28,7 +28,6 @@ class Events(commands.Cog):
 
         self.change_status.start()
         self.change_statuss.start()
-
 
 
 def setup(bot):
