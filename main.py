@@ -4,20 +4,11 @@ import random
 import os
 import itertools
 from cogs.info import EmbedHelpCommand
-# import mysql.connector
-#
-# db = mysql.connector.connect(
-#     host="35.223.188.9",
-#     user="dareal",
-#     passwd="XdyjA-FH8wWbv+nH7@7K!&2c^",
-#     database="economy",
-#     port=3306
-# )
+import os
+import asyncpg
 
+TOKEN = os.environ.get('DAREAL_BOT_TOKEN')
 
-# class MyHelpCommand(commands.MinimalHelpCommand):
-#     def get_command_signature(self, command):
-#         return '{0.clean_prefix}{1.qualified_name} {1.signature}'.format(self, command)
 bot = commands.Bot(command_prefix=['sudo.', 'Sudo.'], case_insensetive=True, help_command=EmbedHelpCommand())
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
@@ -27,14 +18,15 @@ for filename in os.listdir('./events'):
     if filename.endswith('.py'):
         bot.load_extension(f"events.{filename[:-3]}")
 
-# bot.remove_command("help")
+
+async def create_db_pool():
+    bot.pg_con = await asyncpg.create_pool(host="35.222.202.229", database="darealbot", user="postgres", password="Bestmate69")
 
 
 
 
+bot.loop.run_until_complete(create_db_pool())
 
 bot.load_extension('jishaku')
 
-
-
-bot.run('NTg5MDc1MjE4NjA2MTk0Njk5.Xsp28Q.w4AdvKbxLY_-2TtA_ZBkw_OAACc')
+bot.run(f'{TOKEN}')

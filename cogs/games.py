@@ -19,8 +19,8 @@ class Games(commands.Cog):
 
     def has_profile():
         async def predicate(ctx):
-            with open('data/users.json', 'r') as f:
-                data = json.load(f)
+            user = await ctx.cog.bot.pg_con.fetch("SELECT * FROM roblox WHERE discord_id = $1", ctx.author.id)
+            if not user:
 
             # await ctx.send(type(f"{ctx.author.id}"))
             # await ctx.send(data[f"{ctx.author.id}"])
