@@ -3,7 +3,7 @@ from discord.ext import commands, tasks
 import random
 import os
 import itertools
-from cogs.info import EmbedHelpCommand
+import darealmodule
 import os
 import asyncpg
 

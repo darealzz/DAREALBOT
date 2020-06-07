@@ -18,6 +18,7 @@ class Events(commands.Cog):
     async def change_statuss(self):
         await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"DArealServers"))
 
+
     @commands.Cog.listener()
     async def on_ready(self):
 
@@ -25,6 +26,8 @@ class Events(commands.Cog):
         print(self.bot.user.name)
         print(self.bot.user.id)
         print('------')
+
+        # await self.bot.change_presence(activity=discord.Streaming(name="Dareal", url='https://twitch.tv/twitch'))
 
         self.change_status.start()
         self.change_statuss.start()

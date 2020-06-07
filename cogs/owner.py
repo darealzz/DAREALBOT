@@ -3,19 +3,16 @@ from discord.ext import commands
 import time
 import sys
 import os
-from classes.helping import Helping
-
+import darealmodule
 
 class OwnerOnly(commands.Cog):
-    """
-These commands has been reserved for the ownership team to streamline development.
-    """
+    """These commands has been reserved for the ownership team to streamline development."""
     def __init__(self, bot):
         self.bot = bot
-        self.icon = '<:owner:712000766826774568>'
-        self.thumbnail = 'https://cdn.discordapp.com/attachments/711529920349732909/712343777590902875/feelings_1.png'
+        self.icon = '<:Owner:718138683684945952>'
+        self.thumbnail = 'https://media.discordapp.net/attachments/714855923621036052/718138457540657202/433918.png?width=499&height=499'
 
-    @commands.command(description="Owner only.")
+    @commands.command(description="Owner only.", help='Loads the given cog, if it already loaded it will raise an error.')
     @commands.is_owner()
     async def load(self, ctx, extension):
         """
@@ -28,7 +25,7 @@ These commands has been reserved for the ownership team to streamline developmen
         else:
             await ctx.send(f"<:check:711530148196909126> | **Loaded Cog: `{extension}`**")
 
-    @commands.command(description="Owner only.")
+    @commands.command(description="Owner only.", help='Reloads the given cog, if an error is raised it will not load again.')
     @commands.is_owner()
     async def reload(self, ctx, extension):
         """
@@ -42,7 +39,7 @@ These commands has been reserved for the ownership team to streamline developmen
             self.bot.load_extension(f"cogs.{filename[:-3]}")
             await ctx.send(f"<:check:711530148196909126> | **Realoded Cog: `{extension}`**")
 
-    @commands.command(description="Owner only.")
+    @commands.command(description="Owner only.", help='Unloads the given cog, if it already unloaded it will raise an error.')
     @commands.is_owner()
     async def unload(self, ctx, extension):
         """
@@ -55,14 +52,14 @@ These commands has been reserved for the ownership team to streamline developmen
         else:
             await ctx.send(f"<:check:711530148196909126> | **Unloaded Cog: `{extension}`**")
 
-    @commands.command(description="Owner only.")
+    @commands.command(description="Owner only.", help='Reloads all cogs buy unloading and loading each cog, if an error is raised the cog will not be loaded.')
     @commands.is_owner()
     async def r(self, ctx):
         """
         Reloads all cogs.
         """
 
-        embed=discord.Embed(title="a", color=0x36393E)
+        embed=discord.Embed(title="a", color=0x2f3136)
         # embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=Helping().get_footer(ctx))
         # await ctx.send(embed=embed)
         # return
@@ -88,7 +85,7 @@ These commands has been reserved for the ownership team to streamline developmen
         embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=Helping().get_footer(ctx))
         await ctx.send(embed=embed)
 
-    @commands.command(description="Owner only.")
+    @commands.command(description="Owner only.", help='Sends a list of all loaded cogs, events and unloaded cogs will be skipped.')
     @commands.is_owner()
     async def cogs(self, ctx):
         """
@@ -99,7 +96,7 @@ These commands has been reserved for the ownership team to streamline developmen
                 await ctx.send(f"`{filename[:-3]}`")
 
 
-    @commands.group()
+    @commands.group(aliases=['dm'], help='Unloads/Reloads the error handler file, respective to the subcommand, meaning errors being handled will not be sent.')
     @commands.is_owner()
     async def debugmode(self, ctx):
         """
@@ -110,7 +107,7 @@ These commands has been reserved for the ownership team to streamline developmen
         #
         # await ctx.send(f"<:check:711530148196909126> | **Bot has been changed to debuging mode.**")
 
-    @debugmode.command(name='-on')
+    @debugmode.command(name='-on', help='Unloads the error handler file.')
     async def _on(self, ctx):
         """
         Changes bot to debug mode.
@@ -121,7 +118,7 @@ These commands has been reserved for the ownership team to streamline developmen
         except:
             await ctx.send(f"<:rcross:711530086251364373> | **The bot is already in debug mode.**")
 
-    @debugmode.command(name='-off')
+    @debugmode.command(name='-off', help='Loads the error handler file.')
     async def _off(self, ctx):
         """
         Turns debug mode off.

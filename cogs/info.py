@@ -5,11 +5,10 @@ import time
 import sys
 import os
 import datetime
-from classes.helping import Helping
-
+import darealmodule
 class EmbedHelpCommand(commands.HelpCommand):
 
-    COLOUR = 0x36393E
+    COLOUR = 0x2f3136
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.verify_checks = False
@@ -26,10 +25,7 @@ class EmbedHelpCommand(commands.HelpCommand):
         return f"""```md
 * All optional aurguments are wrapped with '[]'
 * All mandatory aurguments are wrapped with '<>'
-```
-```diff
-- Do NOT type these symbols when during command usage
-+ {self.clean_prefix}{self.invoked_with} [command | module] for help on a command/module.
+* {self.clean_prefix}{self.invoked_with} [command | module] for help on a command/module.
 ```
         """
 
@@ -40,7 +36,7 @@ class EmbedHelpCommand(commands.HelpCommand):
     def get_author_icon(self):
         return f'{self.context.author.avatar_url_as(format="png")}'
     async def send_bot_help(self, mapping):
-        embed = discord.Embed(title='HELP PANNEL', description=self.get_opening_note(), colour=self.COLOUR)
+        embed = discord.Embed(title='<:balloons:714891302763757629> HELP PANNEL <:balloons:714891302763757629>', description=self.get_opening_note(), colour=self.COLOUR)
         description = self.context.bot.description
         if description:
             embed.description = description
@@ -64,11 +60,22 @@ class EmbedHelpCommand(commands.HelpCommand):
             #     value = '\u2002'.join(f'`{c.name}`' for c in commands)
             #     if cog:
             #         value = '{0}'.format(value)
-
-
-        embed.add_field(name='Enabled Modules', value=cogs, inline=False)
+        about=f"""
+*Dev*‏‏‎ ‎*-* ‎*`@dareal#2231`, `433293211436580874`*
+*Dev* *-* *`@lolkm8#6312`, `644648271901622283`*
+*Lib* ‎‏‎*-* ‏‏‏‎ ‎*[discord.py](https://github.com/Rapptz/discord.py)*, ‏‏‎ ‎*[docs](https://discordpy.readthedocs.io/en/latest)*
+<:Invite:718152781747453952>__*[Click here to invite the bot to your server!](https://discord.com/api/oauth2/authorize?client_id=589075218606194699&permissions=8&scope=bot)*__
+<:Join:718154643095683142>__*[Click here to join the support server!](https://discord.gg/M67zbB)*__
+        """
+        embed.add_field(name='**Enabled Modules**', value=cogs, inline=True)
+        embed.add_field(name='**About**', value=about, inline=True)
 
         embed.set_footer(text=self.get_ending_note())
+        await self.get_destination().send(embed=embed)
+
+    async def send_error_message(self, error):
+        embed=discord.Embed(title="That command or module was not found.", description=f'<:warningerrors:713782413381075536> Please note that Modules and Commands are **`case sensetive`**.', color=0x2f3136)
+        embed.set_footer(icon_url=self.context.author.avatar_url_as(format="png"), text=Helping().get_footer(self.context))
         await self.get_destination().send(embed=embed)
 
     async def send_cog_help(self, cog):
@@ -82,7 +89,7 @@ class EmbedHelpCommand(commands.HelpCommand):
         for command in filtered:
             cmds += f"`{(self.get_command_signature_name(command)).strip()}`"
             cmds += f" - "
-            cmds += command.short_doc
+            cmds += command.callback.__doc__.strip()
             cmds += '\n'
         embed.add_field(name=f'**{cog.__doc__}**', value=cmds, inline=False)
         embed.set_thumbnail(url=cog.thumbnail)
@@ -100,6 +107,13 @@ class EmbedHelpCommand(commands.HelpCommand):
             for command in filtered:
                 embed.add_field(name=self.get_command_signature(command), value=command.short_doc, inline=False)
 
+        if len(group.aliases) != 0:
+            aliases = ""
+            for i in group.aliases:
+                aliases+=f'`{i}`'
+                aliases+=f'‏‏‎ ‎‏‏‎ ‎'
+            embed.add_field(name='**Aliases**', value=aliases, inline=False)
+
         embed.set_thumbnail(url=group.cog.thumbnail)
         embed.set_footer(text=self.get_ending_note())
         await self.get_destination().send(embed=embed)
@@ -116,12 +130,12 @@ class Info(commands.Cog):
         bot.help_command = EmbedHelpCommand()
         bot.help_command.cog = self
         self.bot = bot
-        self.icon = "<:info:712343961796083733>"
-        self.thumbnail = 'https://cdn.discordapp.com/attachments/711529920349732909/712341250409365544/feelings.png'
-        self.helping = Helping()
+        self.icon = "<:Info:718139261328556032>"
+        self.thumbnail = 'https://media.discordapp.net/attachments/714855923621036052/718139093531492392/433944.png?width=499&height=499'
+        self.helping = darealmodule.Helping()
         self.global_check = False
 
-    @commands.command(description="Displays the average webstock latency.")
+    @commands.command(aliases=['p'] ,help="Displays the average webstock latency calculated from 3 requests.")
     async def ping(self, ctx):
         """
         Displays the average webstock latency.
@@ -131,8 +145,8 @@ class Info(commands.Cog):
             lst.append(round(self.bot.latency*1000))
 
 
-        embed=discord.Embed(title="PONG", color=0x36393E)
-        embed.add_field(name=f"Average websocket latency", value=f":ping_pong: | `{lst[0]}ms`", inline=False)
+        embed=discord.Embed(title="PONG", color=0x2f3136)
+        embed.add_field(name=f"Average websocket latency", value=f"<:Info:718139261328556032> | `{lst[0]}ms`", inline=False)
         embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=self.helping.get_footer(ctx))
         await ctx.send(embed=embed)
 
