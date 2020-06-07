@@ -60,7 +60,7 @@ class OwnerOnly(commands.Cog):
         """
 
         embed=discord.Embed(title="a", color=0x2f3136)
-        # embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=Helping().get_footer(ctx))
+        # embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(self, ctx))
         # await ctx.send(embed=embed)
         # return
         description=""
@@ -82,7 +82,7 @@ class OwnerOnly(commands.Cog):
         #await ctx.send(f"<:check:711530148196909126> | `Reloaded the cogs`")
         embed.title=f'{loaded} modules where loaded & {not_loaded} modules where not loaded.'
         embed.description=description
-        embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=Helping().get_footer(ctx))
+        embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(self, ctx))
         await ctx.send(embed=embed)
 
     @commands.command(description="Owner only.", help='Sends a list of all loaded cogs, events and unloaded cogs will be skipped.')

@@ -21,4 +21,4 @@ class Helping():
         return f'{self.now.hour}:{x}'
 
     def get_footer(self, ctx):
-        return f'[-] Invoked by {ctx.author} @ {self.get_time_in_gmt()}'
+        return f'[-] Invoked by {ctx.author} @ {Helping().get_time_in_gmt()}'

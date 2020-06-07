@@ -6,10 +6,12 @@ import itertools
 import darealmodule
 import os
 import asyncpg
+from cogs.info import EmbedHelpCommand
 
 TOKEN = os.environ.get('DAREAL_BOT_TOKEN')
 
 bot = commands.Bot(command_prefix=['sudo.', 'Sudo.'], case_insensetive=True, help_command=EmbedHelpCommand())
+
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         bot.load_extension(f"cogs.{filename[:-3]}")

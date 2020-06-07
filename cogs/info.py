@@ -75,7 +75,7 @@ class EmbedHelpCommand(commands.HelpCommand):
 
     async def send_error_message(self, error):
         embed=discord.Embed(title="That command or module was not found.", description=f'<:warningerrors:713782413381075536> Please note that Modules and Commands are **`case sensetive`**.', color=0x2f3136)
-        embed.set_footer(icon_url=self.context.author.avatar_url_as(format="png"), text=Helping().get_footer(self.context))
+        embed.set_footer(icon_url=self.context.author.avatar_url_as(format="png"), text=darealmodule.get_footer(self.context))
         await self.get_destination().send(embed=embed)
 
     async def send_cog_help(self, cog):
@@ -132,7 +132,6 @@ class Info(commands.Cog):
         self.bot = bot
         self.icon = "<:Info:718139261328556032>"
         self.thumbnail = 'https://media.discordapp.net/attachments/714855923621036052/718139093531492392/433944.png?width=499&height=499'
-        self.helping = darealmodule.Helping()
         self.global_check = False
 
     @commands.command(aliases=['p'] ,help="Displays the average webstock latency calculated from 3 requests.")
@@ -147,7 +146,7 @@ class Info(commands.Cog):
 
         embed=discord.Embed(title="PONG", color=0x2f3136)
         embed.add_field(name=f"Average websocket latency", value=f"<:Info:718139261328556032> | `{lst[0]}ms`", inline=False)
-        embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=self.helping.get_footer(ctx))
+        embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(self, ctx))
         await ctx.send(embed=embed)
 
     # def cog_unload(self):
