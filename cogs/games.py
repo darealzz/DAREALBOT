@@ -32,19 +32,18 @@ class Games(commands.Cog):
     @has_profile()
     @commands.is_owner()
     async def flip(self, ctx, choice):
+        await ctx.message.add_reaction('<a:loading:716280480579715103>')
         """
         Flips a coin for money.
         """
         async def random_roast(lost):
             return random.choice([f'Hahahah **noob** you failed and fliped `{flip.lower()}` instead but u chose `{choice.lower()}`, u just lost `${lost}`',
             f'LOL U PEASENT, YOU JUST LOST `${lost}`.. my man chose `{choice.lower()}` and flipped a `{flip.lower()}` :rofl:',
-            f'**lmao... imagine being you right now** :laughing: u just lost `${lost}` cuz you chose `{choice.lower()}` and rolled `{flip.lower()}` L0L'])
+            f'**lmao... imagine being you right now** :laughing: u just lost `${lost}` cuz you chose `{choice.lower()}` and flipped `{flip.lower()}` L0L'])
         
-        async def random_compliment():
-            lost = await darealmodule.Money.calculate_random_remove(self, ctx, ctx.author.id, 5, 10)
-            return random.choice([f'Hahahah **noob** you failed and fliped `{flip.lower()}` instead but u chose `{choice.lower()}`, u just lost `${lost}`',
-            f'LOL U PEASENT, YOU JUST LOST `${lost}`.. my man chose `{choice.lower()}` and flipped a `{flip.lower()}` :rofl:',
-            f'**lmao... imagine being you right now** :laughing: u just lost `${lost}` cuz you chose `{choice.lower()}` and rolled `{flip.lower()}` L0L'])
+        async def random_compliment(gained):
+            return random.choice([f'you took `${gained}` from dareals money... *dareal sad* :frowning:',
+            f':cry: why do you have to be so good at guessing. *you made dareal sad because you took `${gained}` from me*'])
         
         choice = choice.upper()
 
@@ -59,12 +58,15 @@ class Games(commands.Cog):
         flip = random.choice(['HEADS', 'TAILS'])
 
         if flip == choice:
-            pass
-        
+            gained = await darealmodule.Money.calculate_random_add(self, ctx, ctx.author.id, 10, 16)
+            await darealmodule.Money.add_ammount(self, ctx, ctx.author.id, gained)
+            await ctx.send(f'<:check:711530148196909126> {await random_compliment(gained)}\n{ctx.author.mention}')
+            await ctx.message.remove_reaction('<a:loading:716280480579715103>', self.bot.user)
         else:
             lost = await darealmodule.Money.calculate_random_remove(self, ctx, ctx.author.id, 5, 10)
             await darealmodule.Money.remove_ammount(self, ctx, ctx.author.id, lost)
             await ctx.send(f'<:rcross:711530086251364373> {await random_roast(lost)}\n{ctx.author.mention}')
+            await ctx.message.remove_reaction('<a:loading:716280480579715103>', self.bot.user)
 
 def setup(bot):
     bot.add_cog(Games(bot))
