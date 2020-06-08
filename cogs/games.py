@@ -46,10 +46,14 @@ class Games(commands.Cog):
 
         await ctx.message.add_reaction('<a:loading:716280480579715103>')
 
+        async def random_roast_title():
+            return random.choice(['Lol noob, you failed at life',
+            'Oh look, you tried something and it failed...',
+            'Lmao, it would suck being you right now'])
+
         async def random_roast(lost):
-            return random.choice([f'Hahahah **noob** you failed and fliped `{flip.lower()}` instead but u chose `{choice.lower()}`, u just lost `${lost}`',
-            f'LOL U PEASENT, YOU JUST LOST `${lost}`.. my man chose `{choice.lower()}` and flipped a `{flip.lower()}` :rofl:',
-            f'**lmao... imagine being you right now** :laughing: u just lost `${lost}` cuz you chose `{choice.lower()}` and flipped `{flip.lower()}` L0L'])
+            return random.choice([f'You chose **`{choice}`** and **`{flip}`** was flipped, you lost **`${lost}`**',
+            f'You lost **`${lost}`** cuz I flipped **`{flip}`** but you chose **`{choice}`** lol'])
 
         async def random_compliment_title():
             return random.choice(['Hmmm... looks like you got it right :confused:',
@@ -88,7 +92,11 @@ class Games(commands.Cog):
             lost = await darealmodule.Money.calculate_random_remove(self, ctx, ctx.author.id, 5, 10)
             await darealmodule.Money.remove_ammount(self, ctx, ctx.author.id, lost)
             await ctx.message.remove_reaction('<a:loading:716280480579715103>', self.bot.user)
-            await ctx.send(f'<:rcross:711530086251364373> {await random_roast(lost)}\n{ctx.author.mention}')
+
+            embed=discord.Embed(title=f"{await random_roast_title()}", description=f'<:rcross:711530086251364373> {await random_roast(lost)}', color=0x2f3136)
+            embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(self, ctx))
+            await ctx.send(embed=embed)
+            return
 
 def setup(bot):
     bot.add_cog(Games(bot))
