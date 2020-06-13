@@ -28,7 +28,7 @@ class Games(commands.Cog):
                 return True
         return commands.check(predicate)
 
-
+    @commands.cooldown(1, per=30, type=discord.ext.commands.BucketType.guild)
     @commands.command(help='`<choice>` - Heads, Tails\nFlips a coin, if your choice is the same as what the flip returns, you will earn money calculated from the currant ammount of money you have, if you get it wrong you will lose money based on the ammount of money you have. You need at least $25 to be able to run this command.')
     @has_profile()
     async def flip(self, ctx, choice):
