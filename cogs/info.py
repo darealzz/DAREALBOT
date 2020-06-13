@@ -119,7 +119,7 @@ class EmbedHelpCommand(commands.HelpCommand):
         await self.get_destination().send(embed=embed)
 
     async def send_error_message(self, error):
-        embed=discord.Embed(title="That command or module was not found.", description=f'<:warningerrors:713782413381075536> Please note that Modules and Commands are **`case sensetive`**.', color=0x2f3136)
+        embed=discord.Embed(title="That command or module was not found.", description=f'<:warningerrors:713782413381075536> Please use `{self.clean_prefix}{self.invoked_with}` to see a full list of commands..', color=0x2f3136)
         embed.set_footer(icon_url=self.context.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(self, self.context))
         await self.get_destination().send(embed=embed)
 
