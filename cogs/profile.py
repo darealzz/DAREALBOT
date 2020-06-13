@@ -134,7 +134,7 @@ class Profile(commands.Cog):
                 embed.add_field(name=f'**2ND PLACE**', value=f'*{user.mention}**:** `${dicts[i]}`*', inline=False)
             if num == 3:
                 embed.add_field(name=f'**3RD PLACE**', value=f'*{user.mention}**:** `${dicts[i]}`*', inline=False)
-            if num == 4 and user_index not in [1, 2, 3]:
+            if num == 4 and user_index not in [0, 1, 2, 3]:
                 embed.add_field(name=f'**YOUR POSITION ({user_index}TH PLACE)**', value=f'*{ctx.author.mention}**:** `${dicts[i]}`*', inline=False)
             num += 1
 
