@@ -28,10 +28,10 @@ class Games(commands.Cog):
                 return True
         return commands.check(predicate)
 
-    @commands.cooldown(1, per=30, type=discord.ext.commands.BucketType.guild)
-    @commands.command(help='`<choice>` - Heads, Tails\nFlips a coin, if your choice is the same as what the flip returns, you will earn money calculated from the currant ammount of money you have, if you get it wrong you will lose money based on the ammount of money you have. You need at least $25 to be able to run this command.')
+    # @commands.cooldown(1, per=30, type=discord.ext.commands.BucketType.guild)
+    @commands.command(help='`<choice>` - Heads, Tails\n`<bet>` - How much you want to bet\nFlips a coin, if your choice is the same as what the flip returns, you will earn double your bet, if you get it wrong you will lose the ammount of money that you placed as a bet. You need at least $25 to be able to run this command.')
     @has_profile()
-    async def flip(self, ctx, choice):
+    async def flip(self, ctx, choice, bet: int):
         """Flips a coin for money."""
         min_ammount = 25
         if await darealmodule.Money.has_money(self, ctx, ctx.author.id, min_ammount) == True:
@@ -80,9 +80,7 @@ class Games(commands.Cog):
             # if ctx.author.id == 644648271901622283:
             #     gained = await darealmodule.Money.calculate_random_add(self, ctx, ctx.author.id, 0, 2)
             # else:
-            gained = await darealmodule.Money.calculate_random_add(self, ctx, ctx.author.id, 10, 16)
-            await darealmodule.Money.add_ammount(self, ctx, ctx.author.id, gained)
-
+            gained = await darealmodule.Money.add_ammount(self, ctx, ctx.author.id, bet*2)
             await ctx.message.remove_reaction('<a:loading:716280480579715103>', self.bot.user)
 
             embed=discord.Embed(title=f"{await random_compliment_title()}", description=f'<:check:711530148196909126> {await random_compliment(gained)}', color=0x2f3136)
@@ -90,8 +88,7 @@ class Games(commands.Cog):
             await ctx.send(embed=embed)
             return
         else:
-            lost = await darealmodule.Money.calculate_random_remove(self, ctx, ctx.author.id, 5, 10)
-            await darealmodule.Money.remove_ammount(self, ctx, ctx.author.id, lost)
+            lost = await darealmodule.Money.remove_ammount(self, ctx, ctx.author.id, bet)
             await ctx.message.remove_reaction('<a:loading:716280480579715103>', self.bot.user)
 
             embed=discord.Embed(title=f"{await random_roast_title()}", description=f'<:rcross:711530086251364373> {await random_roast(lost)}', color=0x2f3136)

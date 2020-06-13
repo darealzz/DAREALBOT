@@ -25,8 +25,9 @@ class Money():
     async def remove_ammount(self, ctx, author_id, ammount):
         guild_id = ctx.guild.id
         user_money = await Money().get_money(ctx, author_id)
-        ammount = user_money - ammount
-        await ctx.cog.bot.pg_con.execute("UPDATE profiles SET money = $1 WHERE discord_id = $2 and guild_id = $3", ammount, author_id, guild_id)
+        ammount_n = int(user_money) - int(ammount)
+        await ctx.cog.bot.pg_con.execute("UPDATE profiles SET money = $1 WHERE discord_id = $2 and guild_id = $3", ammount_n, author_id, guild_id)
+        return ammount
 
     async def calculate_random_add(self, ctx, author_id, min, max):
         user_money = await Money().get_money(ctx, author_id)
@@ -40,8 +41,9 @@ class Money():
     async def add_ammount(self, ctx, author_id, ammount):
         guild_id = ctx.guild.id
         user_money = await Money().get_money(ctx, author_id)
-        ammount = user_money + ammount
-        await ctx.cog.bot.pg_con.execute("UPDATE profiles SET money = $1 WHERE discord_id = $2 and guild_id = $3", ammount, author_id, guild_id)
+        ammount_n = int(user_money) + int(ammount)
+        await ctx.cog.bot.pg_con.execute("UPDATE profiles SET money = $1 WHERE discord_id = $2 and guild_id = $3", ammount_n, author_id, guild_id)
+        return ammount
 
     async def has_money(self, ctx, author_id, ammount):
         if await Money().get_money(ctx, author_id) >= ammount:
