@@ -30,4 +30,4 @@ bot.loop.run_until_complete(create_db_pool())
 
 bot.load_extension('jishaku')
 
-bot.run(f'NTg5MDc1MjE4NjA2MTk0Njk5.XuZ5UA.-i_qcwDsyprrsFKOIDw4n6ZVLcA')
+bot.run(f'NTg5MDc1MjE4NjA2MTk0Njk5.Xuadmg.xkSjYIq9bZVtfQOfz3ooyCdvV_U')
