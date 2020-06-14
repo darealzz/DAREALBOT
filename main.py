@@ -21,8 +21,10 @@ for filename in os.listdir('./events'):
 
 
 async def create_db_pool():
-    bot.pg_con = await asyncpg.create_pool(host="35.222.202.229", database="darealbot", user="postgres", password="Bestmate69")
-
+    try:
+        bot.pg_con = await asyncpg.create_pool(host="35.222.202.229", database="darealbot", user="postgres", password="Bestmate69")
+    except asyncpg.exceptions.InvalidAuthorizationSpecificationError:
+        bot.pg_con = await asyncpg.create_pool(host="localhost", database="darealbot", user="postgres", password="Bestmate69")
 
 
 
