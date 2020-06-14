@@ -10,7 +10,7 @@ from cogs.info import EmbedHelpCommand
 
 TOKEN = os.environ.get('DAREAL_BOT_TOKEN')
 
-bot = commands.Bot(command_prefix=['sudo.', 'Sudo.'], case_insensetive=True, help_command=EmbedHelpCommand(command_attrs = {'help': 'asd'}), case_insensitive=True)
+bot = commands.Bot(command_prefix=['sudo.', 'Sudo.', '-'], case_insensetive=True, help_command=EmbedHelpCommand(command_attrs = {'help': 'asd'}), case_insensitive=True)
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
