@@ -5,7 +5,7 @@ import sys
 import os
 import darealmodule
 
-class OwnerOnly(commands.Cog):
+class Developer(commands.Cog):
     """These commands has been reserved for the ownership team to streamline development."""
     def __init__(self, bot):
         self.bot = bot
@@ -130,4 +130,4 @@ class OwnerOnly(commands.Cog):
             await ctx.send(f"<:rcross:711530086251364373> | **Debug mode is already off.**")
 
 def setup(bot):
-    bot.add_cog(OwnerOnly(bot))
+    bot.add_cog(Developer(bot))

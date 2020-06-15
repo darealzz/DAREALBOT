@@ -93,7 +93,7 @@ class EmbedHelpCommand(commands.HelpCommand):
                 # cogs += '• '
                 cogs += f'• {cog.icon}'
                 cogs += ' '
-                cogs += cog.qualified_name
+                cogs += f'{cog.qualified_name}'
                 cogs += '\n'
             except AttributeError:
                 pass
@@ -110,7 +110,7 @@ class EmbedHelpCommand(commands.HelpCommand):
 *Dev* *-* *`@lolkm8#6312`, `644648271901622283`*
 *Lib* ‎‏‎*-* ‏‏‏‎ ‎*[discord.py](https://github.com/Rapptz/discord.py)*, ‏‏‎ ‎*[docs](https://discordpy.readthedocs.io/en/latest)*
 <:Invite:718152781747453952>__*[Click here to invite the bot to your server!](https://discord.com/api/oauth2/authorize?client_id=589075218606194699&permissions=8&scope=bot)*__
-<:Join:718154643095683142>__*[Click here to join the support server!](https://discord.gg/M67zbB)*__
+<:Join:718154643095683142>__*[Click here to join the support server!](https://discord.gg/fGME6p2)*__
         """
         embed.add_field(name='**Enabled Modules**', value=cogs, inline=True)
         embed.add_field(name='**About**', value=about, inline=True)

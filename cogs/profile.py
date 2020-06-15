@@ -18,8 +18,8 @@ class Profile(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.icon = '<:Profile:718137089434189825>'
-        self.thumbnail = 'https://media.discordapp.net/attachments/714855923621036052/718134838368141452/433917.png'
+        self.icon = '<:Profile:722065626004324403>'
+        self.thumbnail = 'https://cdn.discordapp.com/attachments/714855923621036052/722065519125069866/quasar.png'
 
     def has_profile():
         async def predicate(ctx):
@@ -58,7 +58,6 @@ class Profile(commands.Cog):
         await ctx.send(embed=embed)
         return
 
-
     @commands.command(help='Alows you to remove the profile binded to your account ID, this action can not be undone. Please note that this is guild specific.')
     @has_profile()
     async def remove(self, ctx):
@@ -86,7 +85,7 @@ class Profile(commands.Cog):
 
     @commands.command(aliases=['profile', 'cash'], help='Shows all of the reletive data binded to your profile such as your balance, more comming soon.')
     @has_profile()
-    async def ball(self, ctx):
+    async def bal(self, ctx):
 
         """
         Shows profile info.
@@ -104,18 +103,18 @@ class Profile(commands.Cog):
         await ctx.send(embed=embed)
         return
 
-    @commands.command(aliases=['lb'], help='Place Holder')
+    @commands.command(aliases=['lb'], help='This is a local leaderboard for your server, it shows the top 3 people with the most money including the position of the person who invoked it.')
     @has_profile()
     async def leaderboard(self, ctx):
         """
-        Place Holder
+        Displays server specific leaderboard.
         """
         await ctx.message.add_reaction('<a:loading:716280480579715103>')
         user = await ctx.cog.bot.pg_con.fetch("SELECT discord_id, money FROM profiles WHERE guild_id = $1", ctx.guild.id)
         users_money = {}
         for i in user:
             users_money[int(i['discord_id'])] = int(i['money'])
-        
+
         dicts = dict(sorted(users_money.items(), key=operator.itemgetter(1),reverse=True))
 
         embed=discord.Embed(title=":tada: TOP 3 MEMBERS :tada:.", color=0x2f3136)
@@ -141,6 +140,7 @@ class Profile(commands.Cog):
         embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(ctx.cog, ctx))
         await ctx.message.remove_reaction('<a:loading:716280480579715103>', self.bot.user)
         await ctx.send(embed=embed)
+
 
 
 def setup(bot):
