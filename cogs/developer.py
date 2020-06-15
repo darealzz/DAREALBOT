@@ -129,5 +129,21 @@ class Developer(commands.Cog):
         except:
             await ctx.send(f"<:rcross:711530086251364373> | **Debug mode is already off.**")
 
+    @commands.command(help='Blacklists a user from using the bot globally on all discord servers.')
+    @commands.is_owner()
+    async def blacklist(self, ctx, user: int, *, reason):
+        """
+        Global bot blacklist.
+        """
+        try:
+            member = await self.bot.fetch_user(user)
+        except:
+            await ctx.send('user dont exist bossman')
+            return
+
+        await self.bot.pg_con.execute("INSERT INTO blacklist (discord_id, reason, mod_id) VALUES ($1, $2, $3)", member.id, reason, ctx.author.id)
+
+        await ctx.send(f'blacklisted {member}')
+
 def setup(bot):
     bot.add_cog(Developer(bot))
