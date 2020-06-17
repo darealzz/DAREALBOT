@@ -15,8 +15,8 @@ class Reddit(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.icon = "<:Fun:722199115680710687>"
-        self.thumbnail = 'https://media.discordapp.net/attachments/714791190926458901/722198928254304415/maps-and-location.png'
+        self.icon = "<:Reddit:722784504049172540>"
+        self.thumbnail = 'https://media.discordapp.net/attachments/714855923621036052/722785426871681044/stars_1.png?width=499&height=499'
 
     @commands.command(help='Generates a meme..')
     async def meme(self, ctx):
