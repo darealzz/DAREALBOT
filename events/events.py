@@ -16,12 +16,6 @@ class Events(commands.Cog):
     async def change_status(self):
         await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(self.bot.users)} Users"))
 
-        # for i in await self.bot.pg_con.fetch("SELECT discord_id FROM blacklist"):
-        #     if int(i['discord_id']) in self.bot.blacklist_cache:
-        #         pass
-        #     else:
-        #         self.bot.blacklist_cache.append(int(i['discord_id']))
-
     @tasks.loop(seconds=40)
     async def change_statuss(self):
         await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"DArealServers"))
@@ -59,18 +53,12 @@ class Events(commands.Cog):
         await Classes_channel.edit(name=f'Classes: {cl}')
         await Functions_channel.edit(name=f'Functions: {fn}')
         await Coroutines_channel.edit(name=f'Coroutines: {cr}')
-        # return f"file: {fc}\nline: {ls}\nclass: {cl}\nfunction: {fn}\ncoroutine: {cr}\ncomment: {cm}"
-
-    # async def globally_blacklist(self, ctx):
-    #     if ctx.author.id in self.bot.blacklist_cache:
-    #         await ctx.send('ure blacklisted moron')
-    #     else:
-    #         return True
 
     @tasks.loop(hours=2)
     async def meme_cache_update(self):
+
         self.bot.memes_cache = {}
-        subreddits = ['memes', 'dankmemes', 'memeeconomy', 'me_irl', 'meirl', '2meirl4meirl']
+        subreddits = ['memes', 'dankmemes', 'blackpeopletwitter', 'MemeEconomy', 'wholesomememes']
         categories = ['rising', 'hot', 'top']
 
         for subreddit in subreddits:
@@ -99,7 +87,7 @@ class Events(commands.Cog):
         print('------')
 
 
-        # self.bot.add_check(self.globally_blacklist, call_once=True)
+        self.bot.add_check(self.globally_blacklist, call_once=True)
 
 
 def setup(bot):
