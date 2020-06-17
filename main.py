@@ -12,6 +12,7 @@ from cogs.info import EmbedHelpCommand
 bot = commands.Bot(command_prefix=['sudo.', 'Sudo.', '-'], case_insensetive=True, help_command=EmbedHelpCommand(command_attrs = {'help': 'asd'}), case_insensitive=True)
 bot.blacklist_cache = []
 bot.memes_cache = {}
+bot.bdb_cache = {}
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):

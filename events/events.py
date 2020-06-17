@@ -55,9 +55,9 @@ class Events(commands.Cog):
         await Coroutines_channel.edit(name=f'Coroutines: {cr}')
 
     @tasks.loop(hours=2)
-    async def meme_cache_update(self):
+    async def reddit_cache_update(self):
 
-        self.bot.memes_cache = {}
+        self.bot.memes_cache = {} # Meme cache block
         subreddits = ['memes', 'dankmemes', 'blackpeopletwitter', 'MemeEconomy', 'wholesomememes']
         categories = ['rising', 'hot', 'top']
 
@@ -73,21 +73,35 @@ class Events(commands.Cog):
                             except:
                                 continue
 
+        self.bot.bdb_cache = {} # Bad discord bot cache block
+        subreddits = ['BadDiscordBot']
+        categories = ['rising', 'hot', 'top', 'new']
+
+        for subreddit in subreddits:
+            for category in categories:
+                async with aiohttp.ClientSession() as cs:
+                    async with cs.get(f'https://www.reddit.com/r/{subreddit}/{category}.json') as r:
+                        data = await r.json()
+
+                        for i in data["data"]["children"]:
+                            try:
+                                self.bot.bdb_cache[i["data"]["title"]] = [i["data"]["url"], f'r/{subreddit}/{category}']
+                            except:
+                                continue
+
     @commands.Cog.listener()
     async def on_ready(self):
 
         self.change_status.start()
         self.change_statuss.start()
         self.counter.start()
-        self.meme_cache_update.start()
+        self.reddit_cache_update.start()
 
         print('Logged in as')
         print(self.bot.user.name)
         print(self.bot.user.id)
         print('------')
 
-
-        self.bot.add_check(self.globally_blacklist, call_once=True)
 
 
 def setup(bot):
