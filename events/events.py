@@ -73,21 +73,6 @@ class Events(commands.Cog):
                             except:
                                 continue
 
-        self.bot.bdb_cache = {} # Bad discord bot cache block
-        subreddits = ['BadDiscordBot']
-        categories = ['rising', 'hot', 'top', 'new']
-
-        for subreddit in subreddits:
-            for category in categories:
-                async with aiohttp.ClientSession() as cs:
-                    async with cs.get(f'https://www.reddit.com/r/{subreddit}/{category}.json') as r:
-                        data = await r.json()
-
-                        for i in data["data"]["children"]:
-                            try:
-                                self.bot.bdb_cache[i["data"]["title"]] = [i["data"]["url"], f'r/{subreddit}/{category}']
-                            except:
-                                continue
 
     @commands.Cog.listener()
     async def on_ready(self):
