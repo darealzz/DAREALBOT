@@ -142,14 +142,34 @@ class Profile(commands.Cog):
         await ctx.message.remove_reaction('<a:loading:716280480579715103>', self.bot.user)
         await ctx.send(embed=embed)
 
-    @commands.command(help="")
+    @commands.command(help="`<member>` - Discord member\n`<ammount>` - How much you want to donate\nasd asd a dsa dsasd")
     @has_profile()
     async def donate(self, ctx, member: discord.Member, ammount: int):
         """
         Donates money to a user, taken from your account.
         """
-        return
-        await ctx.message.add_reaction('<a:loading:716280480579715103>')
+
+        currant_money = await darealmodule.Money.get_money(self, ctx, ctx.author.id)
+        if currant_money == ammount:
+            embed=discord.Embed(title="You can't donate all of your money.", description=f'<:warningerrors:713782413381075536> Use `{ctx.prefix}help` to see a full list of commands.', color=0x2f3136)
+            embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(ctx.cog, ctx))
+            await ctx.send(embed=embed)
+            return
+
+        if currant_money < ammount:
+            embed=discord.Embed(title="You can't donate more than you have.", description=f'<:warningerrors:713782413381075536> Use `{ctx.prefix}help` to see a full list of commands.', color=0x2f3136)
+            embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(ctx.cog, ctx))
+            await ctx.send(embed=embed)
+            return
+
+        user = await ctx.cog.bot.pg_con.fetch("SELECT * FROM profiles WHERE discord_id = $1 AND guild_id = $2", member.id, ctx.guild.id)
+        if not user:
+            embed=discord.Embed(title=f"This user does not have a profile.", description=f'<:warningerrors:713782413381075536> Ask {member.mention} to run `{ctx.prefix}create` to create a profile.', color=0x2f3136)
+            embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(ctx.cog, ctx))
+            await ctx.send(embed=embed)
+            return
+
+        # await ctx.message.add_reaction('<a:loading:716280480579715103>')
 
 def setup(bot):
     bot.add_cog(Profile(bot))

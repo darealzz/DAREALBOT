@@ -10,8 +10,7 @@ import aiohttp
 import random
 
 class Reddit(commands.Cog):
-
-    """This Module allows give you reletive data about this bot."""
+    """Shows random images from subreddits pulled from hot, top, new & rising reletive to the command."""
 
     def __init__(self, bot):
         self.bot = bot
