@@ -6,6 +6,7 @@ import sys
 import os
 import datetime
 import darealmodule
+
 class EmbedHelpCommand(commands.HelpCommand):
 
     COLOUR = 0x2f3136
@@ -166,7 +167,6 @@ class EmbedHelpCommand(commands.HelpCommand):
         embed.set_footer(text=self.get_ending_note())
         await self.get_destination().send(embed=embed)
 
-
     send_command_help = send_group_help
 
 class Info(commands.Cog):
@@ -200,7 +200,7 @@ class Info(commands.Cog):
     @commands.command(help="Sends the bots invite link & the support server invite link.")
     async def invite(self, ctx):
         """
-        Displays the average webstock latency.
+        Sends reletive invite links.
         """
 
         await ctx.send(f'*{ctx.author.mention}, Check your Direct Messages!*')

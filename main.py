@@ -8,7 +8,7 @@ import os
 import asyncpg
 from cogs.info import EmbedHelpCommand
 
-bot = commands.Bot(command_prefix=os.environ.get('DAREALBOT_DEFAULT_PREFIX'), case_insensetive=True, help_command=EmbedHelpCommand(command_attrs = {'help': 'asd'}), case_insensitive=True)
+bot = commands.Bot(command_prefix='-', case_insensetive=True, help_command=EmbedHelpCommand(command_attrs = {'help': 'asd'}), case_insensitive=True)
 bot.blacklist_cache = []
 bot.memes_cache = {}
 bot.cute_dog_cache = []
@@ -34,4 +34,5 @@ bot.loop.run_until_complete(create_db_pool())
 
 bot.load_extension('jishaku')
 
-bot.run(f"{os.environ.get('DAREAL_TOKEN')}")
+# bot.run(f"{os.environ.get('DAREAL_TOKEN')}")
+bot.run(f"NTg5MDc1MjE4NjA2MTk0Njk5.Xu4mtg.bJCUx29OUqfSgQhNcA6wT3qMsR0")
