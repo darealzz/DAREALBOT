@@ -48,13 +48,12 @@ class Reddit(commands.Cog):
         # embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(self, ctx))
         # await ctx.send(embed=embed)
 
-        payload = {'key': '12053258-d73248cc69ad03e2e311305db', 'image_type': 'photo', 'lang': 'en', 'q': 'cute+dog'}
+        dog_lst = list(self.bot.cute_dog_cache.items())
+        dog = random.choice(dog_lst)
 
-        async with aiohttp.ClientSession() as cs:
-            async with cs.get(f'https://pixabay.com/api/', params=payload) as r:
-                data = await r.json()
-        for i in data["hits"]:
-            self.bot.cute_dog_cache.append(i["largeImageURL"])
+        embed.set_image(url=f'{dog[0]}')
+        embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(self, ctx))
+        await ctx.send(embed=embed)
 
 
 def setup(bot):
