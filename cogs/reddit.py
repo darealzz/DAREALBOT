@@ -32,7 +32,6 @@ class Reddit(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(aliases = ['cutedog', 'dogo'], help='Generates you a cute cute dogo.')
-    @commands.is_owner()
     async def dog(self, ctx):
         """
         Generates a cute dog.
