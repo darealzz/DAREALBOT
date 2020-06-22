@@ -142,7 +142,7 @@ class Profile(commands.Cog):
         await ctx.message.remove_reaction('<a:loading:716280480579715103>', self.bot.user)
         await ctx.send(embed=embed)
 
-    @commands.command(help="`<member>` - Discord member\n`<ammount>` - How much you want to donate\nasd asd a dsa dsasd")
+    @commands.command(help="`<member>` - Discord member\n`<ammount>` - Ammount you want to donate\nAllows you to donate a certain ammount of money to another user, this money is taken from your account. You can not donate all fo your money.")
     @has_profile()
     async def donate(self, ctx, member: discord.Member, ammount: int):
         """
@@ -154,7 +154,7 @@ class Profile(commands.Cog):
                 embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(ctx.cog, ctx))
                 await ctx.send(embed=embed)
                 return
-                
+
         currant_money = await darealmodule.Money.get_money(self, ctx, ctx.author.id)
         if currant_money == ammount:
             embed=discord.Embed(title="You can't donate all of your money.", description=f'<:warningerrors:713782413381075536> Use `{ctx.prefix}help` to see a full list of commands.', color=0x2f3136)
