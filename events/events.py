@@ -7,11 +7,18 @@ import json
 import pathlib
 import aiohttp
 import darealmodule
+import dbl
+
 
 class Events(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU4OTA3NTIxODYwNjE5NDY5OSIsImJvdCI6dHJ1ZSwiaWF0IjoxNTkzOTg1NDA2fQ.6Ut375Ylh7vl78zKqljR3OJzZlKkfpB30cbox9jmTgQ' # set this to your DBL token
+        self.dblpy = dbl.DBLClient(self.bot, self.token, autopost=True) # Autopost will post your guild count every 30 minutes
+
+    async def on_guild_post():
+        print("Server count posted successfully")
 
     @tasks.loop(seconds=20)
     async def change_status(self):
@@ -122,11 +129,6 @@ class Events(commands.Cog):
         print(self.bot.user.id)
         print('------')
 
-    # @commands.Cog.listener()
-    # async def on_message(self, message):
-        # send = 0
-        # send = None if self.bot.user.mentioned_in(message) and not message.author.bot else False
-        # if send == None: await message.channel.send(f'{message.author.mention} **WHAT THE HELL DO YO WA..** oh hi there! My prefix is `wait im adding it you fat moron`')
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
