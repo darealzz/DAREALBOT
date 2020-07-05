@@ -133,9 +133,9 @@ class Events(commands.Cog):
         x = self.bot.get_guild(699991602126389248)
         channel = x.get_channel(729432679266779186)
         embed = discord.Embed(description=guild.name, color=0x9aeb37)
-        embed.add_field(name='\U0001f30f Region', value=guild.region)
-        embed.add_field(name='\U0001f646 Member Count', value=f'{len(guild.members)}')
-        embed.add_field(name='\U00002604\U0000fe0f Owner', value=f'{guild.owner.name}')
+        embed.add_field(name='\U0001f30f Region', value=guild.region, inline=False)
+        embed.add_field(name='\U0001f646 Member Count', value=f'{len(guild.members)}', inline=False)
+        embed.add_field(name='\U00002604\U0000fe0f Owner', value=f'{guild.owner.name}', inline=False)
         await channel.send(f'\U0001f424 **We have reached our {len(self.bot.guilds)}th server!** \U0001f424')
         await channel.send(embed=embed)
 
