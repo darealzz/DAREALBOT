@@ -7,8 +7,10 @@ import json
 import pathlib
 import aiohttp
 import darealmodule
-import dbl
-
+try:
+    import dbl
+except:
+    import dblpy
 
 class Events(commands.Cog):
 
