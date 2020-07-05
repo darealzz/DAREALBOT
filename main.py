@@ -11,7 +11,7 @@ from cogs.info import EmbedHelpCommand
 # try:
 #     bot = commands.Bot(command_prefix=commands.when_mentioned_or(os.environ.get('DAREALBOT_DEFAULT_PREFIX')), case_insensetive=True, help_command=EmbedHelpCommand(command_attrs = {'help': 'asd'}), case_insensitive=True)
 # except:
-bot = commands.Bot(command_prefix=commands.when_mentioned_or('-'), case_insensetive=True, help_command=EmbedHelpCommand(command_attrs = {'help': 'asd'}), case_insensitive=True)
+bot = commands.Bot(command_prefix=['-', 'sudo.'], case_insensetive=True, help_command=EmbedHelpCommand(command_attrs = {'help': 'asd'}), case_insensitive=True)
 
 bot.blacklist_cache = []
 bot.memes_cache = {}

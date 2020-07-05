@@ -119,7 +119,7 @@ class Games(commands.Cog):
     @commands.cooldown(1, per=180, type=discord.ext.commands.BucketType.user)
     @commands.command(help='You can gain anywhere from $10-40 once every 3 minutes')
     @has_profile()
-    async def work(self, ctx):
+    async def guess(self, ctx, ):
 
         flip = random.choice(['WIN', 'LOOSE', 'NOTHING'])
         if flip == 'WIN':
