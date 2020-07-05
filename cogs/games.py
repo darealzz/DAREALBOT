@@ -33,6 +33,13 @@ class Games(commands.Cog):
     @has_profile()
     async def flip(self, ctx, choice, bet: int):
         """Flips a coin for money."""
+        for i in str(ammount):
+            if i == '-':
+                embed=discord.Embed(title="You can't donate a negetive ammount.", description=f'<:warningerrors:713782413381075536> Use `{ctx.prefix}help` to see a full list of commands.', color=0x2f3136)
+                embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(ctx.cog, ctx))
+                await ctx.send(embed=embed)
+                return
+
         min_ammount = 25
         if await darealmodule.Money.has_money(self, ctx, ctx.author.id, min_ammount) == True:
             pass
@@ -108,6 +115,14 @@ class Games(commands.Cog):
             embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(self, ctx))
             await ctx.send(embed=embed)
             return
+
+    @commands.cooldown(1, per=180, type=discord.ext.commands.BucketType.user)
+    @commands.command(help='You can gain anywhere from $10-40 once every 3 minutes')
+    @has_profile()
+    async def work(self, ctx):
+
+        flip = random.choice(['WIN', 'LOOSE', 'NOTHING'])
+        if flip == 'WIN':
 
 
 def setup(bot):
