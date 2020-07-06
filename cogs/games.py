@@ -33,7 +33,7 @@ class Games(commands.Cog):
     @has_profile()
     async def flip(self, ctx, choice, bet: int):
         """Flips a coin for money."""
-        for i in str(ammount):
+        for i in str(choice):
             if i == '-':
                 embed=discord.Embed(title="You can't donate a negetive ammount.", description=f'<:warningerrors:713782413381075536> Use `{ctx.prefix}help` to see a full list of commands.', color=0x2f3136)
                 embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(ctx.cog, ctx))
