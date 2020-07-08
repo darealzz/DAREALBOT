@@ -16,8 +16,8 @@ class Events(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU4OTA3NTIxODYwNjE5NDY5OSIsImJvdCI6dHJ1ZSwiaWF0IjoxNTkzOTg1NDA2fQ.6Ut375Ylh7vl78zKqljR3OJzZlKkfpB30cbox9jmTgQ' # set this to your DBL token
-        self.dblpy = dbl.DBLClient(self.bot, self.token, webhook_path='/dblwebhook', webhook_auth='Bestmate69', webhook_port=5000, autopost=True) # Autopost will post your guild count every 30 minutes
+        self.token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU4OTA3NTIxODYwNjE5NDY5OSIsImJvdCI6dHJ1ZSwiaWF0IjoxNTk0MjM2NjAwfQ.6Q5KIJF8EmLoRT-z7cYC-dM3V-AIBZCunhTkY6c0TgM' # set this to your DBL token
+        self.dblpy = dbl.DBLClient(self.bot, self.token, webhook_path='/dblwebhook', webhook_auth='Lolcat101', webhook_port=5000, autopost=True) # Autopost will post your guild count every 30 minutes
 
     @commands.Cog.listener()
     async def on_guild_post(self):
@@ -46,7 +46,6 @@ class Events(commands.Cog):
 
     @tasks.loop(seconds=120)
     async def counter(self):
-        guild = await self.bot.fetch_guild(699991602126389248)
 
         Files_channel = await self.bot.fetch_channel(719546043121008642)
         Lines_channel = await self.bot.fetch_channel(719546162436374628)

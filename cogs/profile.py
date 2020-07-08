@@ -97,7 +97,8 @@ class Profile(commands.Cog):
 
         async def gen_random():
             return random.choice(["Oh hey, I found your profile and uh a cat?",
-            "Hey, I've missed you, dw I got your profile down here."])
+            "Hey, I've missed you, dw I got your profile down here.",
+            "yo, got ure profile right down here"])
 
 
         embed=discord.Embed(title=f"{await gen_random()}", description=f'<:catbox:719527304476491858> You have **`${money}`** in your account.\nUse `{ctx.prefix}help Games` to view a list of commands to earn money.', color=0x2f3136)
