@@ -17,7 +17,7 @@ class Events(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU4OTA3NTIxODYwNjE5NDY5OSIsImJvdCI6dHJ1ZSwiaWF0IjoxNTkzOTg1NDA2fQ.6Ut375Ylh7vl78zKqljR3OJzZlKkfpB30cbox9jmTgQ' # set this to your DBL token
-        self.dblpy = dbl.DBLClient(self.bot, self.token, autopost=True) # Autopost will post your guild count every 30 minutes
+        self.dblpy = dbl.DBLClient(self.bot, self.token, webhook_path='/dblwebhook', webhook_auth='Bestmate69', webhook_port=5000, autopost=True) # Autopost will post your guild count every 30 minutes
 
     @commands.Cog.listener()
     async def on_guild_post(self):
@@ -26,6 +26,13 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_dbl_vote(self, data):
+        print(data)
+        channel = self.bot.get_channel(730394760363376670)
+        await channel.send(f'{data}')
+
+    @commands.Cog.listener()
+    async def on_dbl_test(self, data):
+        print(data)
         channel = self.bot.get_channel(730394760363376670)
         await channel.send(f'{data}')
 
