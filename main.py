@@ -42,4 +42,5 @@ bot.load_extension('jishaku')
 # try:
 #     bot.run(f"{os.environ.get('DAREAL_TOKEN')}")
 # except:
-bot.run(f"NTg5MDc1MjE4NjA2MTk0Njk5.XwI7ZQ.rbVxggVFSZphr11jniEE-w2MRk0")
+# bot.run(f"NTg5MDc1MjE4NjA2MTk0Njk5.XwI7ZQ.rbVxggVFSZphr11jniEE-w2MRk0")
+bot.run('NzI5NzE1NTcyOTUwMDQwNjE3.XwW6lA.SjwYKeKrQmwI0SydIw5pRuyxLok')
