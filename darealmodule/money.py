@@ -52,18 +52,21 @@ class Money():
             return False
 
     async def get_badges(self, ctx, author_id):
-        guild_id = ctx.guild.id
+        if not await ctx.cog.bot.pg_con.fetchval("SELECT * FROM badges WHERE discord_id = $1", author_id):
+            return None
+
         badges = ""
-        developer = await ctx.cog.bot.pg_con.fetchval("SELECT developer_badge FROM profiles WHERE discord_id = $1", author_id)
+        developer = await ctx.cog.bot.pg_con.fetchval("SELECT developer_badge FROM badges WHERE discord_id = $1", author_id)
         if developer == True:
-            badges += '<:dev:730490030375829665> DArealBot Developer'
-        staff = await ctx.cog.bot.pg_con.fetchval("SELECT staff_badge FROM profiles WHERE discord_id = $1", author_id)
+            badges += '<:dev:730490030375829665> DArealBot Developer\n'
+        staff = await ctx.cog.bot.pg_con.fetchval("SELECT staff_badge FROM badges WHERE discord_id = $1", author_id)
         if staff == True:
-            badges += '<:staff:730489979058257951> DArealBot Staff'
-        partner = await ctx.cog.bot.pg_con.fetchval("SELECT partner_badge FROM profiles WHERE discord_id = $1", author_id)
+            badges += '<:staff:730489979058257951> DArealBot Staff\n'
+        partner = await ctx.cog.bot.pg_con.fetchval("SELECT partner_badge FROM badges WHERE discord_id = $1", author_id)
         if partner == True:
             badges += '<:partner:730490002366005288> DArealBot Partner'
         if len(badges) == 0:
             return None
         else:
             return badges
+

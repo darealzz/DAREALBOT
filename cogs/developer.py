@@ -129,43 +129,40 @@ class Developer(commands.Cog):
         except:
             await ctx.send(f"<:rcross:711530086251364373> | **Debug mode is already off.**")
 
-    @commands.command(help='Blacklists a user from using the bot globally on all discord servers.')
+    @commands.command(help='asd')
     @commands.is_owner()
-    async def blacklist(self, ctx, user: int, *, reason):
+    async def lad(self, ctx, member: discord.Member, badge):
         """
-        Global bot blacklist.
-        """
-        try:
-            member = await self.bot.fetch_user(user)
-        except:
-            await ctx.send('user dont exist bossman')
+        Adds a badge to a user.
+    `   """
+
+        badges = ['developer_badge', 'staff_badge', 'partner_badge']
+        if badge.lower() not in badges:
+            embed=discord.Embed(title="Badge not found.", description=f'<:warningerrors:713782413381075536> No badges found with the name of `{badge}`.', color=0x2f3136)
+            embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(self, ctx))
+            await ctx.message.remove_reaction('<a:loading:716280480579715103>', self.bot.user)
+            await ctx.send(embed=embed)
             return
 
-        try:
-            await self.bot.pg_con.execute("INSERT INTO blacklist (discord_id, reason, mod_id) VALUES ($1, $2, $3)", member.id, reason, ctx.author.id)
-        except:
-            await ctx.send('this user is already blacklisted')
+        x = await ctx.cog.bot.pg_con.fetchval(f"SELECT discord_id FROM badges WHERE discord_id = $1", member.id)
+        if not x:
+            await self.bot.pg_con.execute("INSERT INTO badges (discord_id, developer_badge, staff_badge, partner_badge) VALUES ($1, FALSE, FALSE, FALSE)", member.id)
 
-        await ctx.send(f'blacklisted {member}, **please allow upto __20 SECONDS__ for this change to be taken into effect**')
+        has = await ctx.cog.bot.pg_con.fetchval(f"SELECT {badge} FROM badges WHERE discord_id = $1", member.id)
+        if has == True:
+            embed=discord.Embed(title="User already has this badge.", description=f'<:warningerrors:713782413381075536> This user already has the `{badge}` badge.', color=0x2f3136)
+            embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(self, ctx))
+            await ctx.message.remove_reaction('<a:loading:716280480579715103>', self.bot.user)
+            await ctx.send(embed=embed)
+            return
 
+        await self.bot.pg_con.execute(f"UPDATE badges SET {badge}=TRUE WHERE discord_id = $1", member.id)
 
-
-    # @commands.command(help='Unblacklists a user, meaning they can use the bot globally accross all servers, they must be blacklisted for this to work.')
-    # @commands.is_owner()
-    # async def unblacklist(self, ctx, user: int, *):
-    #     """
-    #     Unblacklists the user globally.
-    #     """
-    #     user = await ctx.cog.bot.pg_con.fetch("SELECT * FROM blacklist WHERE discord_id = $1", ctx.author.id)
-
-    #     if not user:
-    #        await ctx.send('this user is not blacklisted')
-    #        return
-
-    #     user = await self.bot.pg_con.execute("DELETE FROM blacklist WHERE discord_id = $1", ctx.author.id)
-
-
-    #     await ctx.send('unblacklisted the user')
+        embed=discord.Embed(title="Badge added successfully.", description=f"<:check:711530148196909126> {badge} was added to {member}'s profile.", color=0x2f3136)
+        embed.set_footer(icon_url=ctx.author.avatar_url_as(format="png"), text=darealmodule.Helping.get_footer(self, ctx))
+        await ctx.message.remove_reaction('<a:loading:716280480579715103>', self.bot.user)
+        await ctx.send(embed=embed)
+        return
 
 def setup(bot):
     bot.add_cog(Developer(bot))
