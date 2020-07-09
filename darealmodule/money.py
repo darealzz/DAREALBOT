@@ -64,7 +64,7 @@ class Money():
             badges += '<:staff:730489979058257951> DArealBot Staff\n'
         partner = await ctx.cog.bot.pg_con.fetchval("SELECT partner_badge FROM badges WHERE discord_id = $1", author_id)
         if partner == True:
-            badges += '<:partner:730490002366005288> DArealBot Partner'
+            badges += '<:partner:730490002366005288> DArealBot Partner\n'
         voter = await ctx.cog.bot.pg_con.fetchval("SELECT voter_badge FROM badges WHERE discord_id = $1", author_id)
         if voter == True:
             badges += '<:voter:730746652062646283> DArealBot DBL Voter'

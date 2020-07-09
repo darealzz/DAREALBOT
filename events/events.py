@@ -27,7 +27,22 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_dbl_vote(self, data):
         channel = await self.bot.fetch_channel(730739315336019998)
-        member = self.bot.fetch_user(data.json()['id'])
+        member = self.bot.fetch_user(data['user'])
+        badge = 'voter_badge'
+        await channel.send(f'{member.mention} ({member.id}) has just voted! I have asigned the **voter** badge to this user...\nhttps://top.gg/bot/589075218606194699/vote')
+        x = await ctx.cog.bot.pg_con.fetchval(f"SELECT discord_id FROM badges WHERE discord_id = $1", member.id)
+        if not x:
+            await self.bot.pg_con.execute("INSERT INTO badges (discord_id, developer_badge, staff_badge, partner_badge, voter_badge) VALUES ($1, FALSE, FALSE, FALSE, FALSE)", member.id)
+
+        has = await ctx.cog.bot.pg_con.fetchval(f"SELECT {badge} FROM badges WHERE discord_id = $1", member.id)
+        if has == True:
+            return
+        await self.bot.pg_con.execute(f"UPDATE badges SET {badge}=TRUE WHERE discord_id = $1", member.id)
+
+    @commands.Cog.listener()
+    async def on_dbl_test(self, data):
+        channel = await self.bot.fetch_channel(730739315336019998)
+        member = self.bot.fetch_user(data['user'])
         badge = 'voter_badge'
         await channel.send(f'{member.mention} ({member.id}) has just voted! I have asigned the **voter** badge to this user...\nhttps://top.gg/bot/589075218606194699/vote')
         x = await ctx.cog.bot.pg_con.fetchval(f"SELECT discord_id FROM badges WHERE discord_id = $1", member.id)
