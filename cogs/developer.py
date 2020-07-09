@@ -150,7 +150,7 @@ class Developer(commands.Cog):
 
         x = await ctx.cog.bot.pg_con.fetchval(f"SELECT discord_id FROM badges WHERE discord_id = $1", member.id)
         if not x:
-            await self.bot.pg_con.execute("INSERT INTO badges (discord_id, developer_badge, staff_badge, partner_badge) VALUES ($1, FALSE, FALSE, FALSE)", member.id)
+            await self.bot.pg_con.execute("INSERT INTO badges (discord_id, developer_badge, staff_badge, partner_badge, voter_badge) VALUES ($1, FALSE, FALSE, FALSE, FALSE)", member.id)
 
         has = await ctx.cog.bot.pg_con.fetchval(f"SELECT {badge} FROM badges WHERE discord_id = $1", member.id)
         if has == True:
